@@ -34,6 +34,14 @@ def prepare_model():
 
 @app.route('/')
 def home():
+    try:
+        # Load the model and scaler when the application starts
+        with open('model.pkl', 'rb') as f:
+            model = pickle.load(f)
+        with open('scaler.pkl', 'rb') as f:
+            scaler = pickle.load(f)
+    except Exception as e:
+        print(f"Error loading model: {str(e)}")
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
@@ -72,5 +80,4 @@ def predict():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
-    prepare_model()  # Initialize the model before starting the app
     app.run(debug=True)
