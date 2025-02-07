@@ -3,83 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diabetes Prediction</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Diabetes Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+        }
         body {
-            background-color: #f8f9fa;
-            padding: 20px;
+            background-color: #f8f9fc;
+            font-family: 'Nunito', sans-serif;
         }
-        .prediction-form {
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        .card-header {
             background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e3e6f0;
+            border-top-left-radius: 15px !important;
+            border-top-right-radius: 15px !important;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        .form-control {
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            transform: translateY(-1px);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .input-group-text {
+            background-color: #f8f9fc;
+            border-radius: 10px 0 0 10px;
+            border-right: none;
+        }
+        .tooltip-inner {
+            max-width: 200px;
+            padding: 0.5rem 1rem;
+            background-color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="header">
-                    <h1 class="text-primary">Diabetes Prediction System</h1>
-                    <p class="text-muted">Enter your blood report values for prediction</p>
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 text-primary mb-3">Diabetes Detection System</h1>
+                    <p class="lead text-secondary">Enter your health metrics below for diabetes risk assessment</p>
                 </div>
-                <div class="prediction-form">
-                    <form action="/predict" method="post">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="Pregnancies" class="form-label">Number of Pregnancies</label>
-                                <input type="number" class="form-control" id="Pregnancies" name="Pregnancies" required step="1" min="0">
+                
+                <div class="card">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0 text-primary">Health Metrics Form</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/predict" method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Pregnancies</label>
+                                        <input type="number" class="form-control" name="Pregnancies" required min="0" step="1"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" 
+                                               title="Number of times pregnant">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Glucose Level</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="Glucose" required min="0"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                   title="Plasma glucose concentration (mg/dL)">
+                                            <span class="input-group-text">mg/dL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Blood Pressure</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="BloodPressure" required min="0"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                   title="Diastolic blood pressure (mm Hg)">
+                                            <span class="input-group-text">mm Hg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Skin Thickness</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="SkinThickness" required min="0"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                   title="Triceps skin fold thickness (mm)">
+                                            <span class="input-group-text">mm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Insulin</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="Insulin" required min="0"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                   title="2-Hour serum insulin (mu U/ml)">
+                                            <span class="input-group-text">mu U/ml</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">BMI</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="BMI" required min="0" step="0.1"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" 
+                                                   title="Body Mass Index (weight in kg/(height in m)²)">
+                                            <span class="input-group-text">kg/m²</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Diabetes Pedigree Function</label>
+                                        <input type="number" class="form-control" name="DiabetesPedigreeFunction" required min="0" step="0.001"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" 
+                                               title="Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Age</label>
+                                        <input type="number" class="form-control" name="Age" required min="0" step="1"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" 
+                                               title="Age in years">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Glucose" class="form-label">Glucose Level (mg/dL)</label>
-                                <input type="number" class="form-control" id="Glucose" name="Glucose" required step="1" min="0">
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-calculator me-2"></i>Analyze Risk
+                                </button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="BloodPressure" class="form-label">Blood Pressure (mm Hg)</label>
-                                <input type="number" class="form-control" id="BloodPressure" name="BloodPressure" required step="1" min="0">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="SkinThickness" class="form-label">Skin Thickness (mm)</label>
-                                <input type="number" class="form-control" id="SkinThickness" name="SkinThickness" required step="1" min="0">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="Insulin" class="form-label">Insulin Level (μU/mL)</label>
-                                <input type="number" class="form-control" id="Insulin" name="Insulin" required step="1" min="0">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="BMI" class="form-label">BMI</label>
-                                <input type="number" class="form-control" id="BMI" name="BMI" required step="0.1" min="0">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="DiabetesPedigreeFunction" class="form-label">Diabetes Pedigree Function</label>
-                                <input type="number" class="form-control" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" required step="0.001" min="0">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="Age" name="Age" required step="1" min="0">
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">Predict</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
 </html>
